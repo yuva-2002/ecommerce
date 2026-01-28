@@ -28,6 +28,7 @@ button{
   cursor:pointer;
   color:#fff;
   font-size:15px;
+  width:100%;
 }
 
 .add{background:#2e7d32;}
@@ -53,7 +54,7 @@ input{
 
 <div class="card">
   <h3>T-Shirt</h3>
-  <p>Price: ₹ <b id="price">499</b></p>
+  <p>Price: ₹ <b>499</b></p>
 
   Qty:
   <input type="number" id="qty" value="1" min="1"><br><br>
@@ -65,7 +66,7 @@ input{
   🛒 Items: <b id="items">0</b><br>
   💰 Total: ₹ <b id="total">0</b>
 
-  <button class="upi" onclick="showQR()">Pay via UPI</button>
+  <button class="upi" onclick="payUPI()">Pay via UPI</button>
 
   <button class="wa" onclick="orderWhatsApp()">Place Order on WhatsApp</button>
 
@@ -78,6 +79,7 @@ input{
 <script>
 const PRICE = 499;
 const UPI_ID = "yuvasivasakthi.2002@oksbi";
+
 let items = 0;
 let total = 0;
 
@@ -92,7 +94,8 @@ function addToCart(){
   document.getElementById("total").innerText = total;
 }
 
-function showQR(){
+// 🔥 MOBILE → UPI APP | DESKTOP → QR
+function payUPI(){
   if(total === 0){
     alert("Please add item first");
     return;
@@ -101,6 +104,13 @@ function showQR(){
   let upiURL =
    `upi://pay?pa=${UPI_ID}&pn=Yuva%20Store&am=${total}&cu=INR`;
 
+  // 📱 Mobile detection
+  if(/Android|iPhone|iPad/i.test(navigator.userAgent)){
+    window.location.href = upiURL;
+    return;
+  }
+
+  // 💻 Desktop → QR code
   document.getElementById("qr").src =
    "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" +
    encodeURIComponent(upiURL);
@@ -120,7 +130,7 @@ function orderWhatsApp(){
    `Total: ₹${total}`;
 
   window.open(
-    `https://wa.me/919498587626?text=${msg}`,
+    `https://wa.me/919489587626?text=${msg}`,
     "_blank"
   );
 }
