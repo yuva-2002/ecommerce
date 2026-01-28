@@ -2,9 +2,56 @@
 <html>
 <head>
   <title>My Ecommerce</title>
+
+  <!-- SimpleCart CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/simpleCart/3.0.6/simpleCart.min.js"></script>
+
+  <style>
+    body{
+      font-family: Arial;
+      background:#f4f4f4;
+      padding:20px;
+    }
+    .product{
+      background:#fff;
+      padding:15px;
+      width:250px;
+      border-radius:6px;
+    }
+    button{
+      padding:8px 12px;
+      background:green;
+      color:white;
+      border:none;
+      cursor:pointer;
+    }
+  </style>
+
+  <script>
+    simpleCart({
+      currency: "INR"
+    });
+  </script>
 </head>
+
 <body>
-  <h1>Welcome to My Store</h1>
-  <p>My first free e-commerce website 🚀</p>
+
+<h1>My Store</h1>
+
+<div class="product simpleCart_shelfItem">
+  <h3 class="item_name">T-Shirt</h3>
+  <p>₹ <span class="item_price">499</span></p>
+  <input type="number" class="item_quantity" value="1">
+  <br><br>
+  <button class="item_add">Add to Cart</button>
+</div>
+
+<br>
+
+🛒 Cart Items: <span class="simpleCart_quantity"></span><br>
+💰 Total: ₹ <span class="simpleCart_total"></span><br><br>
+
+<button onclick="simpleCart.checkout()">Checkout</button>
+
 </body>
 </html>
