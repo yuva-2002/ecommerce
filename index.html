@@ -1,29 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>My Ecommerce</title>
+  <meta charset="UTF-8">
+  <title>Yuva Store</title>
 
   <!-- SimpleCart CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/simpleCart/3.0.6/simpleCart.min.js"></script>
 
   <style>
     body{
-      font-family: Arial;
+      font-family: Arial, sans-serif;
       background:#f4f4f4;
       padding:20px;
+    }
+    h1{
+      text-align:center;
     }
     .product{
       background:#fff;
       padding:15px;
-      width:250px;
-      border-radius:6px;
+      max-width:300px;
+      margin:auto;
+      border-radius:8px;
+      box-shadow:0 2px 6px rgba(0,0,0,0.1);
+      text-align:center;
     }
     button{
-      padding:8px 12px;
-      background:green;
-      color:white;
+      padding:10px 15px;
       border:none;
+      border-radius:5px;
       cursor:pointer;
+      color:#fff;
+      margin-top:8px;
+    }
+    .add{
+      background:#2e7d32;
+    }
+    .pay{
+      background:#1565c0;
+    }
+    .order{
+      background:#ef6c00;
+    }
+    .cart{
+      text-align:center;
+      margin-top:20px;
+      font-size:16px;
     }
   </style>
 
@@ -31,27 +53,55 @@
     simpleCart({
       currency: "INR"
     });
+
+    function sendOrder(){
+      let msg = "🛒 Order Details:%0A";
+      simpleCart.each(function(item){
+        msg += item.get("name") + " x " + item.get("quantity") + "%0A";
+      });
+      msg += "%0A💰 Total: ₹" + simpleCart.total();
+      msg += "%0A📲 Pay via UPI: yuvasivasakthi.2002@oksbi";
+
+      window.open(
+        "https://wa.me/91XXXXXXXXXX?text=" + msg,
+        "_blank"
+      );
+    }
   </script>
 </head>
 
 <body>
 
-<h1>My Store</h1>
+<h1>🛍️ Yuva Store</h1>
 
 <div class="product simpleCart_shelfItem">
   <h3 class="item_name">T-Shirt</h3>
-  <p>₹ <span class="item_price">499</span></p>
-  <input type="number" class="item_quantity" value="1">
-  <br><br>
-  <button class="item_add">Add to Cart</button>
+  <p>Price: ₹ <span class="item_price">499</span></p>
+
+  <input type="number" class="item_quantity" value="1" min="1">
+
+  <br>
+  <button class="add item_add">Add to Cart</button>
 </div>
 
-<br>
+<div class="cart">
+  🛒 Items: <span class="simpleCart_quantity"></span><br>
+  💰 Total: ₹ <span class="simpleCart_total"></span>
+</div>
 
-🛒 Cart Items: <span class="simpleCart_quantity"></span><br>
-💰 Total: ₹ <span class="simpleCart_total"></span><br><br>
+<div style="text-align:center;margin-top:20px;">
+  <!-- UPI Payment -->
+  <a href="upi://pay?pa=yuvasivasakthi.2002@oksbi&pn=Yuva%20Store&cu=INR">
+    <button class="pay">Pay via UPI</button>
+  </a>
 
-<button onclick="simpleCart.checkout()">Checkout</button>
+  <br>
+
+  <!-- WhatsApp Order -->
+  <button class="order" onclick="sendOrder()">Place Order on WhatsApp</button>
+
+  <p><b>UPI ID:</b> yuvasivasakthi.2002@oksbi</p>
+</div>
 
 </body>
 </html>
