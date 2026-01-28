@@ -1,140 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Yuva Store</title>
-
-<style>
-body{
-  font-family: Arial, sans-serif;
-  background:#f4f4f4;
-  text-align:center;
-  padding:20px;
-}
-
-.card{
-  background:#fff;
-  width:320px;
-  margin:auto;
-  padding:20px;
-  border-radius:10px;
-  box-shadow:0 4px 10px rgba(0,0,0,.1);
-}
-
-button{
-  padding:10px 15px;
-  border:none;
-  border-radius:5px;
-  cursor:pointer;
-  color:#fff;
-  font-size:15px;
-  width:100%;
-}
-
-.add{background:#2e7d32;}
-.upi{background:#1976d2;margin-top:10px;}
-.wa{background:#ff7a00;margin-top:10px;}
-
-input{
-  width:80px;
-  padding:6px;
-  text-align:center;
-}
-
-#qrBox{
-  margin-top:15px;
-  display:none;
-}
-</style>
+    <meta charset="UTF-8">
+    <title>Company Home</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+    <header>
+        <div class="logo">LOGO [cite: 1]</div>
+        <nav>
+            <a href="order.html" class="btn">Order Now [cite: 1]</a>
+            <a href="login.html" class="btn">Log in [cite: 1]</a>
+        </nav>
+    </header>
 
-<h2>🛍️ Yuva Store</h2>
-
-<div class="card">
-  <h3>T-Shirt</h3>
-  <p>Price: ₹ <b>499</b></p>
-
-  Qty:
-  <input type="number" id="qty" value="1" min="1"><br><br>
-
-  <button class="add" onclick="addToCart()">Add to Cart</button>
-
-  <hr>
-
-  🛒 Items: <b id="items">0</b><br>
-  💰 Total: ₹ <b id="total">0</b>
-
-  <button class="upi" onclick="payUPI()">Pay via UPI</button>
-
-  <button class="wa" onclick="orderWhatsApp()">Place Order on WhatsApp</button>
-
-  <div id="qrBox">
-    <img id="qr" width="220">
-    <p><b>Scan & Pay</b></p>
-  </div>
-</div>
-
-<script>
-const PRICE = 499;
-const UPI_ID = "yuvasivasakthi.2002@oksbi";
-
-let items = 0;
-let total = 0;
-
-function addToCart(){
-  let qty = parseInt(document.getElementById("qty").value);
-  if(qty <= 0) return;
-
-  items += qty;
-  total = items * PRICE;
-
-  document.getElementById("items").innerText = items;
-  document.getElementById("total").innerText = total;
-}
-
-// 🔥 MOBILE → UPI APP | DESKTOP → QR
-function payUPI(){
-  if(total === 0){
-    alert("Please add item first");
-    return;
-  }
-
-  let upiURL =
-   `upi://pay?pa=${UPI_ID}&pn=Yuva%20Store&am=${total}&cu=INR`;
-
-  // 📱 Mobile detection
-  if(/Android|iPhone|iPad/i.test(navigator.userAgent)){
-    window.location.href = upiURL;
-    return;
-  }
-
-  // 💻 Desktop → QR code
-  document.getElementById("qr").src =
-   "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" +
-   encodeURIComponent(upiURL);
-
-  document.getElementById("qrBox").style.display="block";
-}
-
-function orderWhatsApp(){
-  if(total === 0){
-    alert("Please add item first");
-    return;
-  }
-
-  let msg =
-   `Order Details:%0A`+
-   `T-Shirt x ${items}%0A`+
-   `Total: ₹${total}`;
-
-  window.open(
-    `https://wa.me/919489587626?text=${msg}`,
-    "_blank"
-  );
-}
-</script>
-
+    <section class="info">
+        <h1>Company Details [cite: 2]</h1>
+        <p>Company Information & Contact details go here. [cite: 3]</p>
+        <a href="menu.html" class="main-btn">View Menu [cite: 5]</a>
+    </section>
 </body>
 </html>
