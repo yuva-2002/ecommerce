@@ -9,18 +9,18 @@
         :root {
             --primary: #0056b3;
             --accent: #e91e63;
-            --bg: #f4f7f9;
-            --text: #2d2d2d;
+            --bg: #f8f9fa;
+            --text: #333;
             --white: #ffffff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); overflow-x: hidden; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); line-height: 1.6; }
 
-        /* Header */
+        /* Desktop Navigation (Kept Original) */
         header {
             background: var(--white);
-            padding: 15px 20px;
+            padding: 1rem 5%;
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -29,113 +29,114 @@
             justify-content: space-between;
             align-items: center;
         }
-        .logo { font-weight: 800; color: var(--primary); font-size: 1.3rem; letter-spacing: -0.5px; }
+        .logo { font-weight: 700; color: var(--primary); font-size: 1.5rem; font-style: italic; }
+        .cart-icon { cursor: pointer; position: relative; font-weight: 600; }
+        .cart-count { background: var(--accent); color: white; border-radius: 50%; padding: 2px 7px; font-size: 12px; margin-left: 5px; }
 
-        /* Mobile Scrolling Filters */
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1581578731548-c64695cc6954?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 40vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 10px; }
+
+        /* Filters */
         .filters {
             display: flex;
-            gap: 12px;
-            padding: 15px 20px;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
             overflow-x: auto;
             background: white;
-            scrollbar-width: none; /* Hide scrollbar Firefox */
-            border-bottom: 1px solid #eee;
+            scrollbar-width: none;
         }
-        .filters::-webkit-scrollbar { display: none; } /* Hide scrollbar Chrome/Safari */
+        .filters::-webkit-scrollbar { display: none; }
 
         .filter-btn {
-            padding: 8px 18px;
+            padding: 8px 20px;
             border: 1px solid #ddd;
-            border-radius: 25px;
+            border-radius: 20px;
             background: white;
-            font-size: 14px;
-            font-weight: 500;
+            cursor: pointer;
             white-space: nowrap;
-            transition: 0.2s;
+            transition: 0.3s;
         }
         .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-        /* Service Grid */
-        .container { padding: 15px; padding-bottom: 100px; } /* Space for bottom bar */
+        /* Service Grid (Desktop Layout Maintained) */
+        .container { max-width: 1200px; margin: 20px auto; padding: 0 20px 100px 20px; }
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* 2 columns on small phones */
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
         }
-
         .card {
             background: var(--white);
             border-radius: 12px;
-            padding: 15px;
-            border: 1px solid #efefef;
+            padding: 20px;
+            transition: transform 0.2s;
+            border: 1px solid #eee;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
         }
-        .card h3 { font-size: 0.95rem; font-weight: 600; line-height: 1.3; margin-bottom: 8px; color: #444; }
-        .price { font-size: 1.1rem; font-weight: 700; color: #000; margin-bottom: 12px; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .card h3 { font-size: 1.1rem; margin-bottom: 10px; min-height: 3rem; }
+        .price { font-size: 1.2rem; font-weight: 700; color: #222; margin-bottom: 15px; }
         
         .add-btn {
             background: var(--white);
             color: var(--accent);
-            border: 1.5px solid var(--accent);
-            padding: 8px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 700;
+            border: 1px solid var(--accent);
+            padding: 10px;
+            border-radius: 6px;
             cursor: pointer;
+            font-weight: 600;
             width: 100%;
         }
-        .add-btn:active { background: var(--accent); color: white; }
+        .add-btn:active, .add-btn:hover { background: var(--accent); color: white; }
 
-        /* Sticky Bottom Mobile Bar */
-        .mobile-bottom-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 25px;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
-            z-index: 1500;
-        }
-        .cart-summary h4 { font-size: 16px; margin: 0; }
-        .cart-summary p { font-size: 12px; color: #777; }
-        .view-cart-btn {
-            background: var(--accent);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            border: none;
-            font-weight: 700;
-        }
-
-        /* Full Screen Mobile Cart */
+        /* Sidebar Cart (Original Desktop Logic) */
         #cart-sidebar {
-            position: fixed; right: -100%; top: 0; width: 100%; height: 100%;
-            background: white; z-index: 2000; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 25px; display: flex; flex-direction: column;
+            position: fixed; right: -100%; top: 0; width: 350px; height: 100%;
+            background: white; box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            z-index: 2000; transition: 0.4s; padding: 25px;
+            display: flex; flex-direction: column;
         }
         #cart-sidebar.active { right: 0; }
-        .cart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .cart-header { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
         #cart-items { flex-grow: 1; overflow-y: auto; }
-        .cart-item { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #f0f0f0; }
+        .cart-item { display: flex; justify-content: space-between; padding: 10px 0; font-size: 0.9rem; border-bottom: 1px solid #f9f9f9; }
         
-        .checkout-btn { 
-            width: 100%; background: #25d366; color: white; border: none; 
-            padding: 18px; border-radius: 12px; font-size: 16px; font-weight: 700; 
-            margin-top: 20px; display: flex; justify-content: center; align-items: center; gap: 10px;
+        .checkout-btn { width: 100%; background: #25d366; color: white; border: none; padding: 15px; border-radius: 8px; margin-top: 20px; font-weight: 700; cursor: pointer; }
+
+        /* Mobile Adjustments (Specific to Screens < 768px) */
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+            .hero h1 { font-size: 1.8rem; }
+            #cart-sidebar { width: 100%; }
+            .filters { justify-content: flex-start; padding: 15px; }
+            .logo { font-size: 1.1rem; }
         }
 
-        /* Desktop Adjustments */
-        @media (min-width: 769px) {
-            .grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
-            #cart-sidebar { width: 400px; }
-            .mobile-bottom-bar { display: none; }
+        /* Mobile Bottom Bar (Hidden on Desktop) */
+        .mobile-bar {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: white; padding: 15px 20px;
+            display: none; justify-content: space-between; align-items: center;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.08); z-index: 1500;
+        }
+        @media (max-width: 768px) {
+            .mobile-bar.active { display: flex; }
         }
     </style>
 </head>
@@ -143,10 +144,17 @@
 
 <header>
     <div class="logo">AtoZ Urban Clean</div>
-    <div onclick="toggleCart()" style="cursor: pointer; font-size: 20px;">🛒</div>
+    <div class="cart-icon" onclick="toggleCart()">
+        MY BAG <span class="cart-count" id="cart-count">0</span>
+    </div>
 </header>
 
-<div class="filters" id="filter-container">
+<section class="hero">
+    <h1>We Clean. You Relax.</h1>
+    <p>Luxury Cleaning for Everyday Living</p>
+</section>
+
+<div class="filters">
     <button class="filter-btn active" onclick="filterServices('all')">All Services</button>
     <button class="filter-btn" onclick="filterServices('Basic')">Basic Clean</button>
     <button class="filter-btn" onclick="filterServices('Deep')">Deep Cleaning</button>
@@ -158,44 +166,39 @@
     <div class="grid" id="services-grid"></div>
 </div>
 
-<div class="mobile-bottom-bar" id="bottom-bar" style="display: none;">
-    <div class="cart-summary">
-        <h4 id="bar-total">₹ 0</h4>
-        <p id="bar-count">0 Items Added</p>
+<div class="mobile-bar" id="mobile-bar">
+    <div>
+        <h4 id="m-total">₹ 0</h4>
+        <small id="m-count">0 items</small>
     </div>
-    <button class="view-cart-btn" onclick="toggleCart()">View Bag →</button>
+    <button onclick="toggleCart()" style="background:var(--accent); color:white; border:none; padding:10px 18px; border-radius:8px; font-weight:700;">View Bag →</button>
 </div>
 
 <div id="cart-sidebar">
     <div class="cart-header">
-        <h2 style="font-weight: 800;">My Bag</h2>
-        <button onclick="toggleCart()" style="background: #eee; border: none; padding: 10px 15px; border-radius: 50%; font-weight: bold;">✕</button>
+        <h3>My Selections</h3>
+        <button onclick="toggleCart()" style="border:none; background:none; font-size: 24px;">✕</button>
     </div>
-    <div id="cart-items">
+    <div id="cart-items"></div>
+    <div style="padding-top:20px; border-top: 2px solid #eee;">
+        <div style="display:flex; justify-content:space-between; font-weight:800; font-size: 1.2rem;">
+            <span>Total:</span>
+            <span id="cart-total">₹ 0</span>
         </div>
-    <div class="cart-footer">
-        <div style="display: flex; justify-content: space-between; font-size: 18px; font-weight: 700; padding: 20px 0;">
-            <span>Grand Total</span>
-            <span id="final-total">₹ 0</span>
-        </div>
-        <button class="checkout-btn" onclick="checkout()">
-            Confirm Booking (WhatsApp)
-        </button>
+        <button class="checkout-btn" onclick="checkout()">Book via WhatsApp</button>
     </div>
 </div>
 
 <script>
     const services = [
-        { id: 1, cat: 'Basic', name: 'Window & Door (1 no)', price: 99 },
+        { id: 1, cat: 'Basic', name: 'Window & Door cleaning', price: 99 },
         { id: 2, cat: 'Basic', name: 'Fan Cleaning (1 no)', price: 99 },
-        { id: 4, cat: 'Basic', name: 'Bathroom (Floor & Tiles)', price: 799 },
-        { id: 5, cat: 'Basic', name: 'Indoor Home Cleaning', price: 5999 },
-        { id: 6, cat: 'Deep', name: 'Premium Kitchen Deep', price: 1799 },
-        { id: 7, cat: 'Deep', name: 'Furnished Deep (<1200sf)', price: 6499 },
-        { id: 8, cat: 'Deep', name: 'Furnished Deep (>2000sf)', price: 15599 },
-        { id: 9, cat: 'Office', name: 'Standard Office Clean', price: 45 },
-        { id: 10, cat: 'Shifting', name: 'Basic Shifting Local', price: 2999 },
-        { id: 11, cat: 'Shifting', name: 'Shifting (600-1200 sqft)', price: 6999 }
+        { id: 3, cat: 'Basic', name: 'Bathroom (Floor & Tiles)', price: 799 },
+        { id: 4, cat: 'Basic', name: 'Complete Home Indoor', price: 5999 },
+        { id: 5, cat: 'Deep', name: 'Premium Kitchen Deep', price: 1799 },
+        { id: 6, cat: 'Deep', name: 'Furnished House (<1200sf)', price: 6499 },
+        { id: 7, cat: 'Office', name: 'Premium Office Cleaning', price: 55 },
+        { id: 8, cat: 'Shifting', name: 'Local Area Shifting', price: 2999 }
     ];
 
     let cart = [];
@@ -207,68 +210,58 @@
         filtered.forEach(s => {
             grid.innerHTML += `
                 <div class="card">
-                    <h3>${s.name}</h3>
-                    <p class="price">₹${s.price}</p>
+                    <div>
+                        <h3>${s.name}</h3>
+                        <p class="price">₹ ${s.price}</p>
+                    </div>
                     <button class="add-btn" onclick="addToCart(${s.id})">ADD TO BAG</button>
                 </div>`;
         });
     }
 
     function addToCart(id) {
-        const item = services.find(s => s.id === id);
-        cart.push(item);
-        updateUI();
-        // Haptic feedback simulation for mobile
-        if ('vibrate' in navigator) navigator.vibrate(50);
+        cart.push(services.find(s => s.id === id));
+        updateCart();
+        if(window.innerWidth > 768) openCart();
     }
 
-    function updateUI() {
-        const cartItems = document.getElementById('cart-items');
-        const bottomBar = document.getElementById('bottom-bar');
+    function updateCart() {
+        const count = cart.length;
+        const total = cart.reduce((sum, item) => sum + item.price, 0);
         
-        let total = 0;
-        cartItems.innerHTML = '';
+        document.getElementById('cart-count').innerText = count;
+        document.getElementById('m-count').innerText = `${count} items`;
+        document.getElementById('m-total').innerText = `₹ ${total}`;
+        document.getElementById('cart-total').innerText = `₹ ${total}`;
         
-        cart.forEach((item, index) => {
-            total += item.price;
-            cartItems.innerHTML += `
-                <div class="cart-item">
-                    <span>${item.name}</span>
-                    <span style="font-weight:700">₹${item.price}</span>
-                </div>`;
-        });
+        const list = document.getElementById('cart-items');
+        list.innerHTML = cart.map(item => `
+            <div class="cart-item">
+                <span>${item.name}</span>
+                <span>₹${item.price}</span>
+            </div>
+        `).join('');
 
-        const totalStr = `₹${total}`;
-        document.getElementById('bar-total').innerText = totalStr;
-        document.getElementById('final-total').innerText = totalStr;
-        document.getElementById('bar-count').innerText = `${cart.length} Service${cart.length > 1 ? 's' : ''} added`;
-        
-        bottomBar.style.display = cart.length > 0 ? 'flex' : 'none';
+        if(count > 0) document.getElementById('mobile-bar').classList.add('active');
     }
 
-    function toggleCart() {
-        document.getElementById('cart-sidebar').classList.toggle('active');
-    }
+    function toggleCart() { document.getElementById('cart-sidebar').classList.toggle('active'); }
+    function openCart() { document.getElementById('cart-sidebar').classList.add('active'); }
 
     function filterServices(cat) {
         displayServices(cat);
         document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.classList.remove('active');
-            if(btn.innerText.toLowerCase().includes(cat.toLowerCase()) || (cat === 'all' && btn.innerText.includes('All'))) {
-                btn.classList.add('active');
-            }
+            btn.classList.toggle('active', btn.innerText.toLowerCase().includes(cat.toLowerCase()) || (cat === 'all' && btn.innerText.includes('All')));
         });
     }
 
     function checkout() {
-        let message = "AtoZ Booking Request:%0a";
-        cart.forEach(item => message += `- ${item.name} (₹${item.price})%0a`);
-        message += `%0a*Total Amount: ${document.getElementById('final-total').innerText}*`;
-        window.open(`https://wa.me/919000000000?text=${message}`);
+        if(cart.length === 0) return;
+        let msg = "AtoZ Booking:%0a" + cart.map(i => `- ${i.name}`).join("%0a") + "%0aTotal: " + document.getElementById('cart-total').innerText;
+        window.open(`https://wa.me/919000000000?text=${msg}`);
     }
 
     displayServices();
 </script>
-
 </body>
 </html>
