@@ -2,22 +2,259 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Company Home</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AtoZ Urban Clean | Luxury Cleaning Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0056b3;
+            --accent: #e91e63; /* Nykaa-style pink accent */
+            --bg: #f8f9fa;
+            --text: #333;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); line-height: 1.6; }
+
+        /* Header */
+        header {
+            background: var(--white);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { font-weight: 700; color: var(--primary); font-size: 1.5rem; font-style: italic; }
+        .cart-icon { cursor: pointer; position: relative; font-weight: 600; }
+        .cart-count { background: var(--accent); color: white; border-radius: 50%; padding: 2px 7px; font-size: 12px; margin-left: 5px; }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1581578731548-c64695cc6954?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 40vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 10px; }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+            overflow-x: auto;
+            background: white;
+        }
+        .filter-btn {
+            padding: 8px 20px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            background: white;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: 0.3s;
+        }
+        .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        /* Service Grid */
+        .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px;
+            transition: transform 0.2s;
+            border: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .card h3 { font-size: 1.1rem; margin-bottom: 10px; min-height: 3rem; }
+        .price { font-size: 1.2rem; font-weight: 700; color: #222; margin-bottom: 15px; }
+        .price span { font-size: 0.9rem; font-weight: 400; color: #777; }
+        .add-btn {
+            background: var(--white);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            transition: 0.3s;
+        }
+        .add-btn:hover { background: var(--accent); color: white; }
+
+        /* Cart Sidebar */
+        #cart-sidebar {
+            position: fixed; right: -400px; top: 0; width: 350px; height: 100%;
+            background: white; box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            z-index: 2000; transition: 0.4s; padding: 20px;
+        }
+        #cart-sidebar.active { right: 0; }
+        .cart-header { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .cart-item { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.9rem; }
+        .checkout-btn { width: 100%; background: #28a745; color: white; border: none; padding: 15px; border-radius: 8px; margin-top: 20px; font-weight: 600; cursor: pointer; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 1.8rem; }
+            #cart-sidebar { width: 100%; }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <div class="logo">LOGO [cite: 1]</div>
-        <nav>
-            <a href="order.html" class="btn">Order Now [cite: 1]</a>
-            <a href="login.html" class="btn">Log in [cite: 1]</a>
-        </nav>
-    </header>
 
-    <section class="info">
-        <h1>Company Details [cite: 2]</h1>
-        <p>Company Information & Contact details go here. [cite: 3]</p>
-        <a href="menu.html" class="main-btn">View Menu [cite: 5]</a>
-    </section>
+<header>
+    <div class="logo">AtoZ Urban Clean</div>
+    <div class="cart-icon" onclick="toggleCart()">
+        MY CART <span class="cart-count" id="cart-count">0</span>
+    </div>
+</header>
+
+<section class="hero">
+    <h1>We Clean. You Relax.</h1>
+    <p>Premium Luxury Cleaning for Everyday Living</p>
+</section>
+
+<div class="filters">
+    <button class="filter-btn active" onclick="filterServices('all')">All Services</button>
+    <button class="filter-btn" onclick="filterServices('Basic')">Basic</button>
+    <button class="filter-btn" onclick="filterServices('Deep')">Deep Cleaning</button>
+    <button class="filter-btn" onclick="filterServices('Office')">Office</button>
+    <button class="filter-btn" onclick="filterServices('Shifting')">Shifting</button>
+</div>
+
+<div class="container">
+    <div class="grid" id="services-grid">
+        </div>
+</div>
+
+<div id="cart-sidebar">
+    <div class="cart-header">
+        <h3>Your Selection</h3>
+        <button onclick="toggleCart()" style="border:none; background:none; cursor:pointer; font-size: 20px;">×</button>
+    </div>
+    <div id="cart-items"></div>
+    <hr>
+    <div style="margin-top:20px; display:flex; justify-content:space-between; font-weight:700;">
+        <span>Total:</span>
+        <span id="cart-total">₹ 0.00</span>
+    </div>
+    <button class="checkout-btn" onclick="checkout()">Book Now via WhatsApp</button>
+</div>
+
+<script>
+    const services = [
+        { id: 1, cat: 'Basic', name: 'Window & Door cleaning', price: 99 },
+        { id: 2, cat: 'Basic', name: 'Fan Cleaning (1 no)', price: 99 },
+        { id: 3, cat: 'Basic', name: 'Exhaust Fan Cleaning', price: 199 },
+        { id: 4, cat: 'Basic', name: 'Bathroom Cleaning (Floor & Tiles)', price: 799 },
+        { id: 5, cat: 'Basic', name: 'Complete Home Cleaning Indoor', price: 5999 },
+        { id: 6, cat: 'Deep', name: 'Premium Kitchen Deep Cleaning', price: 1799 },
+        { id: 7, cat: 'Deep', name: 'Full House Deep Clean (<1200 sqft)', price: 6499 },
+        { id: 8, cat: 'Deep', name: 'Full House Deep Clean (1200-2000 sqft)', price: 10299 },
+        { id: 9, cat: 'Office', name: 'Standard Office Cleaning', price: 45 },
+        { id: 10, cat: 'Shifting', name: 'House Shifting (Local Area)', price: 2999 },
+        { id: 11, cat: 'Shifting', name: 'House Shifting (600-1200 sqft)', price: 6999 }
+    ];
+
+    let cart = [];
+
+    function displayServices(filter = 'all') {
+        const grid = document.getElementById('services-grid');
+        grid.innerHTML = '';
+        
+        const filtered = filter === 'all' ? services : services.filter(s => s.cat === filter);
+
+        filtered.forEach(service => {
+            grid.innerHTML += `
+                <div class="card">
+                    <div>
+                        <h3>${service.name}</h3>
+                        <p class="price">₹ ${service.price} <span>/ unit</span></p>
+                    </div>
+                    <button class="add-btn" onclick="addToCart(${service.id})">ADD TO BAG</button>
+                </div>
+            `;
+        });
+    }
+
+    function addToCart(id) {
+        const item = services.find(s => s.id === id);
+        cart.push(item);
+        updateCart();
+        if(window.innerWidth > 768) openCart();
+    }
+
+    function updateCart() {
+        document.getElementById('cart-count').innerText = cart.length;
+        const cartList = document.getElementById('cart-items');
+        const totalEl = document.getElementById('cart-total');
+        
+        cartList.innerHTML = '';
+        let total = 0;
+
+        cart.forEach((item, index) => {
+            total += item.price;
+            cartList.innerHTML += `
+                <div class="cart-item">
+                    <span>${item.name}</span>
+                    <span>₹${item.price}</span>
+                </div>
+            `;
+        });
+        totalEl.innerText = `₹ ${total.toFixed(2)}`;
+    }
+
+    function toggleCart() {
+        document.getElementById('cart-sidebar').classList.toggle('active');
+    }
+
+    function openCart() {
+        document.getElementById('cart-sidebar').classList.add('active');
+    }
+
+    function filterServices(cat) {
+        displayServices(cat);
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if(btn.innerText.includes(cat) || (cat === 'all' && btn.innerText.includes('All'))) {
+                btn.classList.add('active');
+            }
+        });
+    }
+
+    function checkout() {
+        if(cart.length === 0) return alert("Your bag is empty!");
+        let message = "Hello AtoZ Urban Clean! I want to book:%0a";
+        cart.forEach(item => message += `- ${item.name} (₹${item.price})%0a`);
+        message += `%0aTotal: ${document.getElementById('cart-total').innerText}`;
+        
+        // Replace with your actual phone number
+        window.open(`https://wa.me/919000000000?text=${message}`);
+    }
+
+    // Initialize
+    displayServices();
+</script>
+
 </body>
 </html>
